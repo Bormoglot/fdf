@@ -1,12 +1,12 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    makefile                                           :+:      :+:    :+:    #
+#    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jlavona <marvin@42.fr>                     +#+  +:+       +#+         #
+#    By: jlavona <jlavona@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/06/17 12:29:52 by jlavona           #+#    #+#              #
-#    Updated: 2019/09/26 19:54:57 by jlavona          ###   ########.fr        #
+#    Created: 2020/08/09 12:29:52 by jlavona           #+#    #+#              #
+#    Updated: 2020/08/12 23:00:27 by jlavona          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,10 +16,10 @@ CC = gcc
 # Compiler flags
 #
 # -ggdb3 for Valgrind
-CFLAGS = -Wextra -Werror -ggdb3
+CFLAGS = -Wall -Wextra -Werror -ggdb3
 
 # Source files
-SRCS = main.c read_file.c draw.c transform.c hooks.c
+SRCS = main.c read_file.c draw.c transform.c hooks.c project.c
 
 # C preprocessor flags (where to look for includes)
 CPPFLAGS = -Iincludes
@@ -27,9 +27,8 @@ CPPFLAGS = -Iincludes
 # Libs
 #
 # Linux: -L ./libft -lft -L ./minilibx -lmlx -lX11 -lXext -lm
-LIBS = -L ./libft -lft \
-	   -L ./minilibx -lmlx \
-	   -lX11 -lXext -lm
+# Mac: -L ./libft -lft -L ./minilibx_macos -lmlx -framework OpenGL -framework AppKit
+LIBS = -L ./libft -lft -L ./minilibx_macos -lmlx -framework OpenGL -framework AppKit
 
 # Object files
 OBJS = $(SRCS:.c=.o)

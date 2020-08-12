@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   transform.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlavona <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: jlavona <jlavona@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/22 18:30:57 by jlavona           #+#    #+#             */
-/*   Updated: 2019/10/28 11:00:06 by jlavona          ###   ########.fr       */
+/*   Created: 2020/08/09 18:30:57 by jlavona           #+#    #+#             */
+/*   Updated: 2020/08/12 22:48:22 by jlavona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	shift(t_line *line, t_map *map_data)
 	line->y1 += map_data->y_shift;
 }
 
-void	z_scale(t_line	*line, t_map *map_data)
+void	z_scale(t_line *line, t_map *map_data)
 {
 	line->z0 *= map_data->z_scale;
 	line->z1 *= map_data->z_scale;
