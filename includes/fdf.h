@@ -6,7 +6,7 @@
 /*   By: jlavona <jlavona@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/09 22:05:11 by jlavona           #+#    #+#             */
-/*   Updated: 2020/08/12 22:01:18 by jlavona          ###   ########.fr       */
+/*   Updated: 2020/08/14 05:11:20 by jlavona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@
 # include "mlx.h"
 # include <fcntl.h>
 # include <math.h>
-# define WIN_HEIGHT 400
-# define WIN_WIDTH 700
+# define WIN_HEIGHT 800
+# define WIN_WIDTH 1000
 # define ISO 1
-# define PARA 2
+# define PARA -1
 
 /*/# ifdef __linux__
 #  define KEY_UP_ARROW 65362
@@ -39,6 +39,7 @@
 #  define KEY_ESCAPE 53
 #  define KEY_Z 6
 #  define KEY_X 7
+#  define KEY_P 35
 
 /*
 ** Type for putting pixels
@@ -77,11 +78,25 @@ typedef struct	s_map {
 }				t_map;
 
 /*
+** Type for point
+*
+
+typedef struct s_point {
+
+	int			x;
+	int			y;
+	int			z;
+}				t_point;
+*/
+
+/*
 ** Type for line
 */
 
 typedef struct	s_line {
 
+	//t_point		point0;
+	//t_point		point1;
 	int			x0;
 	int			y0;
 	int			z0;
@@ -112,6 +127,9 @@ void 	project(t_line	*line, t_map *map_data);
 void	zoom(t_line *line, t_map *map_data);
 void	shift(t_line *line, t_map *map_data);
 void	z_scale(t_line	*line, t_map *map_data);
+void	use_bresenham(t_line *line, t_map *map_data);
+void	colorize(t_line *line, t_map *map_data);
 int		key_hooks(int key, t_map *map_data);
+int		error(char *err_message);
 
 #endif

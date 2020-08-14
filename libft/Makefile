@@ -1,12 +1,12 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    makefile                                           :+:      :+:    :+:    #
+#    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jlavona <marvin@42.fr>                     +#+  +:+       +#+         #
+#    By: jlavona <jlavona@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/17 12:29:52 by jlavona           #+#    #+#              #
-#    Updated: 2019/09/26 19:54:57 by jlavona          ###   ########.fr        #
+#    Updated: 2020/08/14 06:03:42 by jlavona          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ SRCS = ft_strlen.c ft_isdigit.c ft_isalpha.c ft_isalnum.c ft_isascii.c \
 	   ft_memmove.c ft_strstr.c ft_strnew.c ft_strsub.c ft_strjoin.c \
 	   ft_strnstr.c ft_itoa.c ft_delptoparr.c ft_strtrim.c ft_strsplit.c \
 	   ft_lstnew.c ft_lstdelone.c ft_lstdel.c ft_lstadd.c ft_lstiter.c \
-	   ft_lstmap.c get_next_line.c ft_wordcount.c
+	   ft_lstmap.c get_next_line.c ft_wordcount.c ft_atoi_base.c
 
 # C preprocessor flags: where to look for includes
 CPPFLAGS = -Iincludes

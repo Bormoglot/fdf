@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jlavona <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: jlavona <jlavona@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 22:05:12 by jlavona           #+#    #+#             */
-/*   Updated: 2019/09/27 18:43:29 by jlavona          ###   ########.fr       */
+/*   Updated: 2020/08/14 06:03:08 by jlavona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,5 +89,6 @@ char				*ft_strtrim(char const *s);
 char				**ft_strsplit(char const *s, char c);
 int					get_next_line(const int fd, char **line);
 size_t				ft_wordcount(char const *s, char c);
+int					ft_atoi_base(char *nb, int base);
 
 #endif
