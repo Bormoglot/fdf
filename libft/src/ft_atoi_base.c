@@ -38,7 +38,7 @@ static int	power(int nb, int power)
 	return (res);
 }
 
-int		ft_atoi_base(char *nb, int base)
+int		ft_atoi_base(const char *nb, int base)
 {
 	int		len;
 	int		position;

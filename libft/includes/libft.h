@@ -89,6 +89,6 @@ char				*ft_strtrim(char const *s);
 char				**ft_strsplit(char const *s, char c);
 int					get_next_line(const int fd, char **line);
 size_t				ft_wordcount(char const *s, char c);
-int					ft_atoi_base(char *nb, int base);
+int					ft_atoi_base(const char *nb, int base);
 
 #endif

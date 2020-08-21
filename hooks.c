@@ -32,22 +32,25 @@ static void	key_hook_change_projection(int key, t_map *map_data)
 	key == KEY_P ? map_data->projection *= -1 : 0;
 }
 
+static void key_hook_zoom(int key, t_map *map_data)
+{
+	key == KEY_C ? map_data->zoom += 4 : 0;
+	key == KEY_V ? map_data->zoom -= 4 : 0;
+}
+
 static void	key_hook_quit(int key, t_map *map_data)
 {
-	int	i;
-
 	if (key == KEY_ESCAPE)
 	{
-		i = 0;
-		while (i < map_data->height)
-			free(map_data->coords[i++]);
-		free(map_data->coords);
 		mlx_destroy_image(map_data->mlx_ptr, map_data->img.img_ptr);
 		mlx_destroy_window(map_data->mlx_ptr, map_data->win_ptr);
+		free(map_data->colors);
+		free(map_data->elevations);
 		free(map_data);
 		exit(EXIT_SUCCESS);
 	}
 }
+
 
 int			key_hooks(int key, t_map *map_data)
 {
@@ -56,6 +59,7 @@ int			key_hooks(int key, t_map *map_data)
 	key_hook_shift(key, map_data);
 	key_hook_zscale(key, map_data);
 	key_hook_change_projection(key, map_data);
+	key_hook_zoom(key, map_data);
 	mlx_destroy_image(map_data->mlx_ptr, map_data->img.img_ptr);
 	map_data->img.img_ptr = mlx_new_image(map_data->mlx_ptr, WIN_WIDTH, \
 		WIN_HEIGHT);

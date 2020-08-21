@@ -11,96 +11,62 @@
 /* ************************************************************************** */
 
 #include "./includes/fdf.h"
-
-int		chars_ok(char *ch)
-{
-	int	res;
-	int i;
-
-	i = 0;
-	res = 1;
-	while (ch[i])
-	{
-		if (!ft_isdigit(ch[i]) && ch[i] != ' ' && ch[i] != '-' && ch[i] != '+')
-			res = 0;
-		++i;
-	}
-	return (res);
-}
-
-void	set_height_width(const char *file_name, t_map *map_data)
-{
-	int			fd;
-	char		*line;
-
-	fd = open(file_name, O_RDONLY);
-	map_data->width = 0;
-	map_data->height = 0;
-	while ((get_next_line(fd, &line)) > 0)
-	{
-		if (!chars_ok(line))
-		{
-			free(line);
-			error("Invalid character in map file");
-		}
-		if (map_data->width == 0)
-			map_data->width = (int)ft_wordcount(line, ' ');
-		else if (map_data->width != (int)ft_wordcount(line, ' '))
-		{
-			free(line);
-			error("Invalid map: unequal rows");
-		}
-		free(line);
-		++(map_data->height);
-	}
-	close(fd);
-}
+#include <stdio.h>							// TO DE:ETE
 
 /*
-** Fills one line of coordinate matrix
+** Allocates and fills elevations and colors arrays.
+** Finds minimum and maximum elevation.
 */
 
-void	fill_coords_line(int *coords_line, char *line)
+void			fill_z_and_color(t_zlist **lst, t_map *map_data)
 {
-	char	**numbers;
-	int		i;
+	t_zlist		*node;
+	int			size;
 
-	numbers = ft_strsplit(line, ' ');
-	i = 0;
-	while (numbers[i])
+	size = map_data->width * map_data->height;
+	printf("size is %d\n", size);
+	if ((!(map_data->elevations = (int *)ft_memalloc(sizeof(int) * size)))
+		|| (!(map_data->colors = (int *)ft_memalloc(sizeof(int) * size))))
+		error("Memory allocation failed");
+	while ((node = get_last_node(lst)))
 	{
-		coords_line[i] = ft_atoi(numbers[i]);
-		free(numbers[i]);
-		i++;
+		map_data->elevations[size - 1] = node->z;
+		map_data->colors[size - 1] = node->color;
+		if (node->z > map_data->max_z)
+			map_data->max_z = node->z;
+		if (node->z < map_data->min_z)
+			map_data->min_z = node->z;
+		size--;
+		free(node);
 	}
-	free(numbers);
 }
 
-void	read_file(char *file_name, t_map *map_data)
+void	read_file(const int fd, t_map *map_data)
 {
 	int		i;
-	int		j;
-	int		fd;
 	char	*line;
+	char	**numbers;
+	t_zlist	*list;
 
-	set_height_width(file_name, map_data);
-	if (!(map_data->coords = (int **)malloc(sizeof(int*) * \
-	(map_data->height + 1))))
-		error("Memory allocation failed");
-	i = 0;
-	while (i < (map_data->height))
+	list = NULL;
+	while ((get_next_line(fd, &line)))
 	{
-		if (!(map_data->coords[i++] = (int *)malloc(sizeof(int) * \
-		(map_data->width + 1))))
-			error("Memory allocation failed");
-	}
-	fd = open(file_name, O_RDONLY);
-	j = 0;
-	while (get_next_line(fd, &line))
-	{
-		fill_coords_line(map_data->coords[j++], line);
+		if (!(numbers = ft_strsplit(line, ' ')))
+			error("Reading map failed");
+		i = -1;
+		while (numbers[++i])
+		{
+			add_node(&list, new_node(numbers[i]));
+			free(numbers[i]);
+		}
+		free(numbers);
+		if (map_data->height == 0)
+			map_data->width = i;
+		if (map_data->width != (int)ft_wordcount(line, ' '))
+			error("Invalid map: unequal rows");
 		free(line);
+		map_data->height++;
 	}
-	close(fd);
-	map_data->coords[j] = NULL;
+	fill_z_and_color(&list, map_data);
+	map_data->zoom = MIN(WIN_WIDTH / map_data->width, WIN_HEIGHT / map_data->height);
 }

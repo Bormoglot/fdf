@@ -16,11 +16,11 @@ CC = gcc
 # Compiler flags
 #
 # -ggdb3 for Valgrind
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -ggdb3 -Wall -Wextra -Werror
 
 # Source files
-SRCS = main.c read_file.c draw.c transform.c hooks.c project.c bresenham.c \
-	   colorize.c
+SRCS = main.c read_file.c draw.c hooks.c bresenham.c \
+	   colorize.c lists_and_validation.c
 
 # C preprocessor flags (where to look for includes)
 CPPFLAGS = -Iincludes
@@ -28,10 +28,10 @@ CPPFLAGS = -Iincludes
 # Libs
 #
 # Linux:
-#LIBS = -L ./libft -lft -L ./minilibx -lmlx -lX11 -lXext -lm
+LIBS = -L ./libft -lft -L ./minilibx -lmlx -lX11 -lXext -lm
 # Mac:
-LIBS = -L ./libft -lft -L ./minilibx_macos -lmlx -framework OpenGL \
-	-framework AppKit
+#LIBS = -L ./libft -lft -L ./minilibx_macos -lmlx -framework OpenGL \
+#	-framework AppKit
 
 # Object files
 OBJS = $(SRCS:.c=.o)

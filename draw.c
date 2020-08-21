@@ -11,36 +11,52 @@
 /* ************************************************************************** */
 
 #include "./includes/fdf.h"
+#include <stdio.h> 				// TO DE:ETE
+
+t_point			new_point(int x, int y, t_map *map_data)
+{
+	t_point		point;
+	int			ix;
+
+	ix = y * map_data->width + x;
+	point.x = x;
+	point.y = y;
+	point.z = map_data->elevations[ix];
+	point.color = (map_data->colors[ix] == -1) ?
+		set_default_color(point.z, map_data) : map_data->colors[ix];
+	return (point);
+}
+
+void	isometric(int *x, int *y, int z)
+{
+	*x = (*x - *y) * cos(0.52);
+	*y = (*x + *y) * sin(0.52) - z;
+}
+
+t_point			transform(int x, int y, t_map *map_data)
+{
+	t_point	point;
+
+	point = new_point(x, y, map_data);
+	point.x *= map_data->zoom;
+	point.y *= map_data->zoom;
+	point.z *= map_data->z_scale;
+	point.x -= (map_data->width * map_data->zoom) / 2;
+	point.y -= (map_data->height * map_data->zoom) / 2;
+	//ft_rotate_xyz(&p.x, &p.y, &p.z, fdf);
+	if (map_data->projection == ISO)
+		isometric(&point.x, &point.y, point.z);
+	point.x += WIN_WIDTH / 2 + map_data->x_shift;
+	point.y += (WIN_HEIGHT + map_data->height * map_data->zoom) / 2
+		+ map_data->y_shift;
+	return (point);
+}
 
 /*
 ** Main drawing function
 */
 
-void	draw_line(t_line *line, t_map *map_data)
-{
-	line->z0 = map_data->coords[line->y0][line->x0];
-	line->z1 = map_data->coords[line->y1][line->x1];
-	zoom(line, map_data);
-	z_scale(line, map_data);
-	colorize(line, map_data);
-	project(line, map_data);
-	shift(line, map_data);
-	use_bresenham(line, map_data);
-}
-
-void	fill_first_point(t_line *line, int x, int y)
-{
-	line->x0 = x;
-	line->y0 = y;
-}
-
-void	fill_second_point(t_line *line, int x, int y)
-{
-	line->x1 = x;
-	line->y1 = y;
-}
-
-void	get_coords_draw(t_line *line, t_map *map_data)
+void	get_coords_draw(t_map *map_data)
 {
 	int		x;
 	int		y;
@@ -52,17 +68,11 @@ void	get_coords_draw(t_line *line, t_map *map_data)
 		while (x < map_data->width)
 		{
 			if (x < map_data->width - 1)
-			{
-				fill_first_point(line, x, y);
-				fill_second_point(line, x + 1, y);
-				draw_line(line, map_data);
-			}
+				draw_line(transform(x, y, map_data), transform(x + 1, y, \
+				map_data), map_data);
 			if (y < map_data->height - 1)
-			{
-				fill_first_point(line, x, y);
-				fill_second_point(line, x, y + 1);
-				draw_line(line, map_data);
-			}
+				draw_line(transform(x, y, map_data), transform(x, y + 1, \
+				map_data), map_data);
 			++x;
 		}
 		++y;
@@ -71,12 +81,8 @@ void	get_coords_draw(t_line *line, t_map *map_data)
 
 void	draw_map(t_map *map_data)
 {
-	t_line		*line;
-
-	line = (t_line*)(malloc(sizeof(t_line)));
-	ft_bzero(line, sizeof(t_line));
-	get_coords_draw(line, map_data);
-	free(line);
+	ft_bzero(map_data->img.addr, WIN_WIDTH * WIN_HEIGHT * (map_data->img.bits_per_pixel / 8));
+	get_coords_draw(map_data);
 	mlx_put_image_to_window(map_data->mlx_ptr, map_data->win_ptr, \
 		map_data->img.img_ptr, 0, 0);
 }

@@ -11,6 +11,9 @@
 /* ************************************************************************** */
 
 #include "./includes/fdf.h"
+#include <stdio.h>
+
+
 
 void	my_mlx_pixel_put(t_map *map_data, int x, int y, int color)
 {
@@ -21,36 +24,37 @@ void	my_mlx_pixel_put(t_map *map_data, int x, int y, int color)
 	dst = map_data->img.addr + (y * map_data->img.line_length + \
 		x * (map_data->img.bits_per_pixel / 8));
 	*(unsigned int*)dst = color;
+
 }
 
 /*
 ** Bresenham's line algorithm
 */
 
-void	use_bresenham(t_line *line, t_map *map_data)
+void	draw_line(t_point p0, t_point p1, t_map *map_data)
 {
 	t_bresvars	b;
 
-	b.dx = abs(line->x1 - line->x0);
-	b.dy = -abs(line->y1 - line->y0);
-	b.sx = line->x0 < line->x1 ? 1 : -1;
-	b.sy = line->y0 < line->y1 ? 1 : -1;
-	b.err = b.dx + b.dy;
+	b.delta_x = abs(p1.x - p0.x);
+	b.delta_y = -abs(p1.y - p0.y);
+	b.sign_x = p0.x < p1.x ? 1 : -1;
+	b.sign_y = p0.y < p1.y ? 1 : -1;
+	b.err = b.delta_x + b.delta_y;
 	while (1)
 	{
-		my_mlx_pixel_put(map_data, line->x0, line->y0, map_data->color);
-		if (line->x0 == line->x1 && line->y0 == line->y1)
+		my_mlx_pixel_put(map_data, p0.x, p0.y, p0.color);
+		if (p0.x == p1.x && p0.y == p1.y)
 			break ;
 		b.err2 = 2 * b.err;
-		if (b.err2 >= b.dy)
+		if (b.err2 >= b.delta_y)
 		{
-			b.err += b.dy;
-			line->x0 += b.sx;
+			b.err += b.delta_y;
+			p0.x += b.sign_x;
 		}
-		if (b.err2 <= b.dx)
+		if (b.err2 <= b.delta_x)
 		{
-			b.err += b.dx;
-			line->y0 += b.sy;
+			b.err += b.delta_x;
+			p0.y += b.sign_y;
 		}
 	}
 }
