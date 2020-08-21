@@ -6,25 +6,23 @@
 /*   By: jlavona <jlavona@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 18:30:57 by jlavona           #+#    #+#             */
-/*   Updated: 2020/08/14 05:00:31 by jlavona          ###   ########.fr       */
+/*   Updated: 2020/08/21 14:53:22 by jlavona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./includes/fdf.h"
-#include <stdio.h>							// TO DE:ETE
 
 /*
 ** Allocates and fills elevations and colors arrays.
 ** Finds minimum and maximum elevation.
 */
 
-void			fill_z_and_color(t_zlist **lst, t_map *map_data)
+void	fill_z_and_color(t_zlist **lst, t_map *map_data)
 {
 	t_zlist		*node;
 	int			size;
 
 	size = map_data->width * map_data->height;
-	printf("size is %d\n", size);
 	if ((!(map_data->elevations = (int *)ft_memalloc(sizeof(int) * size)))
 		|| (!(map_data->colors = (int *)ft_memalloc(sizeof(int) * size))))
 		error("Memory allocation failed");
@@ -68,5 +66,4 @@ void	read_file(const int fd, t_map *map_data)
 		map_data->height++;
 	}
 	fill_z_and_color(&list, map_data);
-	map_data->zoom = MIN(WIN_WIDTH / map_data->width, WIN_HEIGHT / map_data->height);
 }

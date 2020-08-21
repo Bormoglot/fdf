@@ -6,7 +6,7 @@
 /*   By: jlavona <jlavona@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/09 18:30:57 by jlavona           #+#    #+#             */
-/*   Updated: 2020/08/14 05:21:40 by jlavona          ###   ########.fr       */
+/*   Updated: 2020/08/21 14:54:52 by jlavona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ int		main(int argc, char **argv)
 		error("Memory allocation failed");
 	set_map_defaults(map_data);
 	read_file(fd, map_data);
+	map_data->zoom = MIN(WIN_WIDTH / map_data->width, \
+		WIN_HEIGHT / map_data->height);
 	close(fd);
 	set_mlx_ptrs(map_data);
 	draw_map(map_data);

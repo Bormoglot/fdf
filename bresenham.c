@@ -6,14 +6,12 @@
 /*   By: jlavona <jlavona@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/13 22:00:12 by jlavona           #+#    #+#             */
-/*   Updated: 2020/08/13 22:05:26 by jlavona          ###   ########.fr       */
+/*   Updated: 2020/08/21 14:55:58 by jlavona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./includes/fdf.h"
 #include <stdio.h>
-
-
 
 void	my_mlx_pixel_put(t_map *map_data, int x, int y, int color)
 {
@@ -24,7 +22,6 @@ void	my_mlx_pixel_put(t_map *map_data, int x, int y, int color)
 	dst = map_data->img.addr + (y * map_data->img.line_length + \
 		x * (map_data->img.bits_per_pixel / 8));
 	*(unsigned int*)dst = color;
-
 }
 
 /*

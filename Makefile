@@ -6,7 +6,7 @@
 #    By: jlavona <jlavona@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/09 12:29:52 by jlavona           #+#    #+#              #
-#    Updated: 2020/08/13 22:04:04 by jlavona          ###   ########.fr        #
+#    Updated: 2020/08/21 14:41:04 by jlavona          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CC = gcc
 # Compiler flags
 #
 # -ggdb3 for Valgrind
-CFLAGS = -ggdb3 -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 
 # Source files
 SRCS = main.c read_file.c draw.c hooks.c bresenham.c \
@@ -28,10 +28,10 @@ CPPFLAGS = -Iincludes
 # Libs
 #
 # Linux:
-LIBS = -L ./libft -lft -L ./minilibx -lmlx -lX11 -lXext -lm
+#LIBS = -L ./libft -lft -L ./minilibx -lmlx -lX11 -lXext -lm
 # Mac:
-#LIBS = -L ./libft -lft -L ./minilibx_macos -lmlx -framework OpenGL \
-#	-framework AppKit
+LIBS = -L ./libft -lft -L ./minilibx_macos -lmlx -framework OpenGL \
+	-framework AppKit
 
 # Object files
 OBJS = $(SRCS:.c=.o)

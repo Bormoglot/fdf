@@ -6,7 +6,7 @@
 /*   By: jlavona <jlavona@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/22 18:30:57 by jlavona           #+#    #+#             */
-/*   Updated: 2020/08/14 05:00:31 by jlavona          ###   ########.fr       */
+/*   Updated: 2020/08/21 14:51:53 by jlavona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,17 @@ int			valid_color(const char *str)
 	int	hex_len;
 
 	hex_len = 0;
-	while(*str)
+	while (*str)
 	{
 		if ((!ft_isdigit(*str)) && (!ft_strchr("xabcdefABCDEF", *str)))
-				return (0);
+			return (0);
 		str++;
 		hex_len++;
 	}
-
 	if (hex_len > 0 && hex_len != 8)
 		return (0);
 	return (1);
 }
-
 
 /*
 ** Validates elevation and color values.
@@ -47,10 +45,8 @@ int			valid_color(const char *str)
 
 int			validate_values(const char *str, int offset)
 {
-	//int		hex_len;
 	int		i;
 
-	//hex_len = 0;
 	i = 0;
 	while (str[i] && str[i] != ',')
 	{
@@ -69,7 +65,7 @@ int			validate_values(const char *str, int offset)
 	return (offset);
 }
 
-t_zlist	*new_node(char *str)
+t_zlist		*new_node(char *str)
 {
 	t_zlist	*node;
 	int		offset;
@@ -85,7 +81,7 @@ t_zlist	*new_node(char *str)
 	return (node);
 }
 
-void	add_node(t_zlist **lst, t_zlist *new)
+void		add_node(t_zlist **lst, t_zlist *new)
 {
 	t_zlist	*node;
 
@@ -94,7 +90,7 @@ void	add_node(t_zlist **lst, t_zlist *new)
 	*lst = new;
 }
 
-t_zlist			*get_last_node(t_zlist **lst)
+t_zlist		*get_last_node(t_zlist **lst)
 {
 	t_zlist *node;
 

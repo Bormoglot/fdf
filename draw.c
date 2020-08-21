@@ -6,12 +6,11 @@
 /*   By: jlavona <jlavona@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/09 18:30:57 by jlavona           #+#    #+#             */
-/*   Updated: 2020/08/14 04:04:01 by jlavona          ###   ########.fr       */
+/*   Updated: 2020/08/21 14:56:45 by jlavona          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./includes/fdf.h"
-#include <stdio.h> 				// TO DE:ETE
 
 t_point			new_point(int x, int y, t_map *map_data)
 {
@@ -27,7 +26,7 @@ t_point			new_point(int x, int y, t_map *map_data)
 	return (point);
 }
 
-void	isometric(int *x, int *y, int z)
+static void		isometric(int *x, int *y, int z)
 {
 	*x = (*x - *y) * cos(0.52);
 	*y = (*x + *y) * sin(0.52) - z;
@@ -43,7 +42,6 @@ t_point			transform(int x, int y, t_map *map_data)
 	point.z *= map_data->z_scale;
 	point.x -= (map_data->width * map_data->zoom) / 2;
 	point.y -= (map_data->height * map_data->zoom) / 2;
-	//ft_rotate_xyz(&p.x, &p.y, &p.z, fdf);
 	if (map_data->projection == ISO)
 		isometric(&point.x, &point.y, point.z);
 	point.x += WIN_WIDTH / 2 + map_data->x_shift;
@@ -56,7 +54,7 @@ t_point			transform(int x, int y, t_map *map_data)
 ** Main drawing function
 */
 
-void	get_coords_draw(t_map *map_data)
+void			get_coords_draw(t_map *map_data)
 {
 	int		x;
 	int		y;
@@ -79,9 +77,10 @@ void	get_coords_draw(t_map *map_data)
 	}
 }
 
-void	draw_map(t_map *map_data)
+void			draw_map(t_map *map_data)
 {
-	ft_bzero(map_data->img.addr, WIN_WIDTH * WIN_HEIGHT * (map_data->img.bits_per_pixel / 8));
+	ft_bzero(map_data->img.addr, WIN_WIDTH * WIN_HEIGHT * \
+		(map_data->img.bits_per_pixel / 8));
 	get_coords_draw(map_data);
 	mlx_put_image_to_window(map_data->mlx_ptr, map_data->win_ptr, \
 		map_data->img.img_ptr, 0, 0);
